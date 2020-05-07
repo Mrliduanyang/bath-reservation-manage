@@ -30,13 +30,13 @@
       />
       <el-table-column
         label="注册时间"
-        prop="createdAt"
+        prop="updatedAt"
         sortable
         width="150px"
         align="center"
       >
         <template slot-scope="{row}">
-          <span>{{ row.createdAt | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.updatedAt | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column

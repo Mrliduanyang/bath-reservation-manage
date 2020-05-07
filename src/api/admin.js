@@ -1,113 +1,6 @@
 import requestProcess from '@/utils/bmob'
 import Bmob from 'hydrogen-js-sdk'
 
-// const Activity = {
-//   getActivities: (params) => {
-//     const {
-//       page, limit, keyword, author
-//     } = params
-//     const query = Bmob.Query('Activity')
-//     if (keyword !== '') {
-//       query.equalTo('title', '==', keyword)
-//     }
-//     if (author !== '') {
-//       query.equalTo('author', '==', author)
-//     }
-//     query.skip((page - 1) * limit)
-//     query.limit(limit)
-//     return requestProcess(query.find(), false, null)
-//   },
-//   getActivityCount: (params) => {
-//     const {
-//       keyword, author
-//     } = params
-//     const query = Bmob.Query('Activity')
-//     if (keyword !== '') {
-//       query.equalTo('title', '==', keyword)
-//     }
-//     if (author !== '') {
-//       query.equalTo('author', '==', author)
-//     }
-//     return requestProcess(query.count(), false, null)
-//   },
-//   submitActivity: (params) => {
-//     const query = Bmob.Query('Activity')
-//     Object.keys(params)
-//       .forEach((item) => {
-//         query.set(item, params[item])
-//       })
-//     return requestProcess(query.save(), true, '活动添加成功')
-//   },
-//   updateActivity: (params) => {
-//     const {
-//       objectId, title, startTime, endTime, summary, content, cost, capacity
-//     } = params
-//     const query = Bmob.Query('Activity')
-//     query.set('id', objectId)
-//     query.set('title', title)
-//     query.set('startTime', startTime)
-//     query.set('endTime', endTime)
-//     query.set('summary', summary)
-//     query.set('content', content)
-//     query.set('cost', cost)
-//     query.set('capacity', capacity)
-//     return requestProcess(query.save(), true, '活动修改成功')
-//   },
-//   modifyActivityStatus: (params) => {
-//     const {
-//       objectId, status
-//     } = params
-//     const query = Bmob.Query('Activity')
-//     query.set('id', objectId)
-//     query.set('status', status)
-//     return requestProcess(query.save(), false, null)
-//   },
-//   deleteActivity: (params) => {
-//     const {
-//       objectId
-//     } = params
-//     const query = Bmob.Query('Activity')
-//     query.set('id', objectId)
-//     return requestProcess(query.destroy(objectId), false, null)
-//   }
-// }
-//
-// const Registration = {
-//   getRegistrations: (params) => {
-//     const {
-//       page, limit, keyword
-//     } = params
-//     const query = Bmob.Query('Registration')
-//     if (keyword !== '') {
-//       query.equalTo('title', '==', keyword)
-//     }
-//     query.skip((page - 1) * limit)
-//     query.limit(limit)
-//     return requestProcess(query.find(), false, null)
-//   },
-//   getRegistrationCount: (params) => {
-//     const query = Bmob.Query('Registration')
-//     return requestProcess(query.count(), false, null)
-//   }
-// }
-//
-// const About = {
-//   getAbout: (params) => {
-//     const query = Bmob.Query('About')
-//     return requestProcess(query.get('f2f1181e56'), false, null)
-//   },
-//   updateAbout: (params) => {
-//     const { aboutUs, contact: { address, email, phone }} = params
-//     const query = Bmob.Query('About')
-//     query.set('id', 'f2f1181e56')
-//     query.set('aboutUs', aboutUs)
-//     query.set('address', address)
-//     query.set('email', email)
-//     query.set('phone', phone)
-//     return requestProcess(query.save(), false, null)
-//   }
-// }
-
 const User = {
   getUsers(params) {
     const {
@@ -118,6 +11,7 @@ const User = {
       query.equalTo('name', '==', keyword)
     }
     query.equalTo('studentId', '!=', null)
+    query.order('-updatedAt')
     query.skip((page - 1) * limit)
     query.limit(limit)
     return requestProcess(query.find(), false, null)
@@ -158,6 +52,7 @@ const Reservation = {
       query.equalTo('date', '<=', dateRange[1])
     }
     query.equalTo('studentId', '!=', null)
+    query.order('-updatedAt')
     query.skip((page - 1) * limit)
     query.limit(limit)
     return requestProcess(query.find())
@@ -202,6 +97,7 @@ const Dormitory = {
       query.equalTo('name', '==', keyword)
     }
     query.equalTo('studentId', '!=', null)
+    query.order('-updatedAt')
     query.skip((page - 1) * limit)
     query.limit(limit)
     return requestProcess(query.find())

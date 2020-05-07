@@ -202,7 +202,7 @@ export default {
         keyword: '',
         dateRange: []
       },
-      reservationCount: 0,
+      reservationCount: 0
     }
   },
   created() {
@@ -219,7 +219,7 @@ export default {
       const dormitories = await Reservation.getDormitoryById(studentIds)
       this.reservations = tmp.map((item, index) => ({
         index: index + 1,
-        dormitory: dormitories[index].dormitory,
+        dormitory: dormitories.filter((_item) => _item.studentId === item.studentId)[0].dormitory,
         ...item,
         date: `${item.date} ${item.time}`
       }))
