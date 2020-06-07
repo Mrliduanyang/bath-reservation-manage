@@ -122,7 +122,6 @@
         <el-form-item label="性别" prop="sex">
           <el-switch
             v-model="dormitoryForm.sex"
-            :disabled="dialogStatus === 'update'"
             active-color="#13ce66"
             inactive-color="#ff4949"
             active-text="女"

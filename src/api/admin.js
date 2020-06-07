@@ -22,7 +22,7 @@ const User = {
     } = params
     const query = Bmob.User
     if (keyword !== '') {
-      query.equalTo('title', '==', keyword)
+      query.equalTo('name', '==', keyword)
     }
     query.equalTo('studentId', '!=', null)
     return requestProcess(query.count(), false, null)
@@ -125,12 +125,21 @@ const Dormitory = {
       objectId, name, sex, studentId, dormitory
     } = params
     const query = Bmob.Query('Dormitory')
+    const userQuery = Bmob.User
+    userQuery.equalTo('studentId', '==', studentId)
+    userQuery.find().then((res) => {
+      if (res.length === 1) {
+        const { objectId: id } = res[0]
+        userQuery.set('id', id)
+        userQuery.set('sex', sex)
+        userQuery.set('dormitory', dormitory)
+        userQuery.save()
+      }
+    })
     query.set('id', objectId)
-    query.set('name', name)
     query.set('sex', sex)
-    query.set('studentId', studentId)
     query.set('dormitory', dormitory)
-    return requestProcess(query.save(), true, '学生住宿信息修改成功')
+    return requestProcess(query.save(), false, null)
   },
   deleteDormitory: (params) => {
     const {
