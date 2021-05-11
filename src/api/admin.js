@@ -122,7 +122,7 @@ const Dormitory = {
   },
   updateDormitory: (params) => {
     const {
-      objectId, name, sex, studentId, dormitory
+      objectId, sex, studentId, dormitory
     } = params
     const query = Bmob.Query('Dormitory')
     const userQuery = Bmob.User
@@ -150,4 +150,34 @@ const Dormitory = {
     return requestProcess(query.destroy(objectId), false, null)
   }
 }
-export { User, Reservation, Dormitory }
+
+const Statistic = {
+  getStatistic(params) {
+    const {
+      area, entered, cancelled, dateRange
+    } = params
+    const query = Bmob.Query('Reservation')
+    if (area) {
+      query.equalTo('area', '==', area)
+    }
+    // 实际预约人数
+    if (!cancelled) {
+      query.equalTo('cancelled', '==', cancelled)
+    }
+    // 实际进入人数
+    if (!cancelled && entered) {
+      query.equalTo('cancelled', '==', cancelled)
+      query.equalTo('entered', '==', entered)
+    }
+    if (dateRange && dateRange.length === 2) {
+      query.equalTo('date', '>=', dateRange[0])
+      query.equalTo('date', '<=', dateRange[1])
+    }
+    query.statTo('groupcount', 'true')
+    query.statTo('groupby', 'date,time,sex')
+    query.statTo('order', 'date,time')
+    query.limit(1000)
+    return requestProcess(query.find())
+  }
+}
+export { User, Reservation, Dormitory, Statistic }

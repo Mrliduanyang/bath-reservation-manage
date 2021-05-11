@@ -81,6 +81,13 @@ export const asyncRoutes = [{
       meta: {
         title: '预约记录管理'
       }
+    }, {
+      path: 'statistic',
+      component: () => import('@/views/admin/statistic'),
+      name: 'Statistic',
+      meta: {
+        title: '预约结果统计'
+      }
     }]
 }
 ]
